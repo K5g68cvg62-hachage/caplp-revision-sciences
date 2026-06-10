@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -269,6 +268,66 @@
     }
     .tpSection h3 {
       margin-top: 0;
+    }
+    .courseSheet {
+      border: 1px solid #c7d2fe;
+      background: #ffffff;
+      border-radius: 8px;
+      margin-top: 12px;
+      overflow: hidden;
+    }
+    .courseSheetHeader {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: #dbeafe;
+      border-bottom: 1px solid #bfdbfe;
+    }
+    .courseSheetHeader div {
+      padding: 10px 12px;
+      min-height: 92px;
+    }
+    .courseSheetHeader div + div {
+      border-left: 1px solid #bfdbfe;
+      background: #c7ddf6;
+    }
+    .courseSheet h4 {
+      margin: 0 0 6px 0;
+      color: #1e3a8a;
+      font-size: 14px;
+    }
+    .courseSheet details {
+      border-top: 1px solid #e5e7eb;
+      background: #ffffff;
+    }
+    .courseSheet summary {
+      cursor: pointer;
+      padding: 11px 12px;
+      font-weight: 800;
+      color: #172033;
+      background: #f8fafc;
+    }
+    .courseSheet details[open] summary {
+      background: #eff6ff;
+      color: #1d4ed8;
+    }
+    .courseSheetContent {
+      padding: 0 12px 12px 12px;
+      font-size: 13px;
+      line-height: 1.45;
+    }
+    .formulaList b {
+      color: #b91c1c;
+    }
+    .exampleBox {
+      border-left: 4px solid #b45309;
+      background: #fffbeb;
+      padding: 9px 11px;
+      border-radius: 6px;
+      margin-top: 8px;
+    }
+    @media (max-width: 720px) {
+      .courseSheetHeader { grid-template-columns: 1fr; }
+      .courseSheetHeader div + div { border-left: 0; border-top: 1px solid #bfdbfe; }
     }
     .deepBox {
       border-left: 4px solid #2563eb;
@@ -1130,6 +1189,158 @@
           answer: 2,
           correction: 'Dans un fluide immobile, la pression augmente avec la profondeur.'
         }
+      },
+      {
+        id: 'rev_effet_serre',
+        title: 'Rayonnement et effet de serre',
+        domain: 'Thermique',
+        level: 'Terminale Bac Pro',
+        tags: ['rayonnement', 'infrarouge', 'GES'],
+        course: [
+          'Tous les objets émettent un rayonnement thermique lié à leur température.',
+          'La Terre reçoit principalement un rayonnement visible du Soleil et émet un rayonnement infrarouge.',
+          'Les gaz à effet de serre absorbent une partie du rayonnement infrarouge émis par la Terre.',
+          'Une séance solide exploite un schéma de bilan radiatif ou une courbe température-temps.'
+        ],
+        qcm: {
+          question: 'Les gaz à effet de serre absorbent surtout une partie du rayonnement :',
+          options: ['infrarouge terrestre', 'sonore', 'électrique continu', 'visible uniquement sans nuance'],
+          answer: 0,
+          correction: 'Les GES absorbent une partie du rayonnement infrarouge émis par la surface terrestre.'
+        }
+      },
+      {
+        id: 'rev_redressement',
+        title: 'Redressement et filtrage',
+        domain: 'Électricité',
+        level: 'Terminale Bac Pro',
+        tags: ['alternatif', 'continu', 'oscillogramme'],
+        course: [
+          'Une tension alternative change de signe au cours du temps.',
+          'Un redresseur transforme une tension alternative en tension redressée.',
+          'Un condensateur peut filtrer la tension redressée en diminuant l’ondulation.',
+          'L’exploitation attendue repose souvent sur la comparaison d’oscillogrammes.'
+        ],
+        qcm: {
+          question: 'Le rôle d’un redresseur est de transformer :',
+          options: ['une tension alternative en tension redressée', 'un pH en pression', 'un son en image', 'une concentration en masse'],
+          answer: 0,
+          correction: 'Le redressement permet d’obtenir une tension de même signe à partir d’une tension alternative.'
+        }
+      },
+      {
+        id: 'rev_moteur',
+        title: 'Moteur électrique et rendement',
+        domain: 'Électricité',
+        level: 'Terminale Bac Pro',
+        tags: ['conversion', 'rendement', 'pertes'],
+        course: [
+          'Un moteur convertit de l’énergie électrique en énergie mécanique.',
+          'Une partie de l’énergie reçue est dissipée sous forme de pertes.',
+          'Le rendement compare la puissance utile à la puissance reçue.',
+          'Une chaîne énergétique permet de faire apparaître énergie utile et pertes.'
+        ],
+        qcm: {
+          question: 'Le rendement d’un moteur réel est généralement :',
+          options: ['inférieur à 100 %', 'toujours égal à 100 %', 'supérieur à 200 %', 'sans lien avec les pertes'],
+          answer: 0,
+          correction: 'Un moteur réel a des pertes : son rendement est inférieur à 100 %.'
+        }
+      },
+      {
+        id: 'rev_pile_redox',
+        title: 'Pile et oxydoréduction',
+        domain: 'Chimie',
+        level: 'Terminale Bac Pro',
+        tags: ['pile', 'oxydation', 'réduction'],
+        course: [
+          'Une pile convertit une énergie chimique en énergie électrique.',
+          'Une oxydation correspond à une perte d’électrons.',
+          'Une réduction correspond à un gain d’électrons.',
+          'La tension d’une pile se mesure entre deux électrodes reliées par un circuit.'
+        ],
+        qcm: {
+          question: 'Une réduction correspond à :',
+          options: ['un gain d’électrons', 'une perte d’électrons', 'une mesure de pH', 'un changement de lentille'],
+          answer: 0,
+          correction: 'Réduction = gain d’électrons ; oxydation = perte d’électrons.'
+        }
+      },
+      {
+        id: 'rev_concentration_titrage',
+        title: 'Concentration, solubilité et étalonnage',
+        domain: 'Chimie',
+        level: 'Terminale Bac Pro',
+        tags: ['concentration', 'solubilité', 'étalonnage'],
+        course: [
+          'Une concentration exprime une quantité de soluté par volume de solution.',
+          'La solubilité indique la quantité maximale pouvant se dissoudre dans un solvant donné.',
+          'Une courbe d’étalonnage permet de déterminer une concentration inconnue.',
+          'Un dosage peut être destructif ; une méthode d’étalonnage peut être non destructive.'
+        ],
+        qcm: {
+          question: 'La concentration en masse se calcule par :',
+          options: ['Cm = m / V', 'p = F / S', 'U = R x I', 'f = 1 / T'],
+          answer: 0,
+          correction: 'La concentration en masse est Cm = m / V, avec m en g et V en L pour obtenir g/L.'
+        }
+      },
+      {
+        id: 'rev_chromato_synthese',
+        title: 'Chromatographie et synthèse',
+        domain: 'Chimie',
+        level: 'Terminale Bac Pro',
+        tags: ['chromatographie', 'pureté', 'organique'],
+        course: [
+          'La chromatographie permet de séparer et comparer les constituants d’un mélange.',
+          'Un corps pur donne généralement une seule tache dans des conditions données.',
+          'La synthèse chimique consiste à fabriquer une espèce chimique à partir de réactifs.',
+          'Le contrôle du produit peut s’appuyer sur une chromatographie.'
+        ],
+        qcm: {
+          question: 'Une chromatographie sert principalement à :',
+          options: ['séparer et identifier des constituants', 'mesurer une tension', 'calculer une pression', 'redresser un courant'],
+          answer: 0,
+          correction: 'La chromatographie permet de séparer des espèces et de comparer leurs migrations.'
+        }
+      },
+      {
+        id: 'rev_lentille_spectre',
+        title: 'Lentilles et spectres lumineux',
+        domain: 'Optique',
+        level: 'Première Bac Pro',
+        tags: ['lentille', 'image', 'spectre'],
+        course: [
+          'Une lentille convergente peut former une image réelle sur un écran.',
+          'La distance focale caractérise une lentille.',
+          'Un spectre renseigne sur la composition d’une lumière.',
+          'Une source lumineuse se caractérise notamment par son domaine spectral.'
+        ],
+        qcm: {
+          question: 'Une lentille convergente peut former :',
+          options: ['une image nette sur un écran', 'un précipité blanc', 'une tension redressée', 'un ion chlorure'],
+          answer: 0,
+          correction: 'Une lentille convergente peut former une image réelle observable sur un écran.'
+        }
+      },
+      {
+        id: 'rev_debit_venturi',
+        title: 'Débit, vitesse et effet Venturi',
+        domain: 'Mécanique',
+        level: 'Terminale Bac Pro',
+        tags: ['débit', 'vitesse', 'Venturi'],
+        course: [
+          'Le débit volumique correspond au volume de fluide écoulé par unité de temps.',
+          'La vitesse moyenne relie une distance parcourue à une durée.',
+          'Dans un rétrécissement, la vitesse du fluide augmente si le débit est conservé.',
+          'L’effet Venturi associe une augmentation de vitesse à une diminution de pression.'
+        ],
+        qcm: {
+          question: 'Dans un tube de Venturi, au niveau du rétrécissement :',
+          options: ['la vitesse augmente et la pression diminue', 'la vitesse diminue toujours', 'la pression devient le pH', 'le débit devient une température'],
+          answer: 0,
+          correction: 'Dans le rétrécissement, la vitesse augmente et la pression diminue dans le modèle Venturi.'
+        }
       }
     ];
 
@@ -1858,6 +2069,141 @@
       }
     };
 
+    const detailedCourseBank = {
+      rev_ph: {
+        knowledge: ['Définir le pH comme un indicateur d’acidité d’une solution aqueuse.', 'Classer acide, neutre, basique à partir d’une valeur de pH.', 'Savoir qu’en terminale, le pH est lié à la concentration en ions oxonium H3O+.'],
+        skills: ['Mesurer un pH avec papier pH ou pH-mètre.', 'Interpréter une mesure sans goûter ni sentir.', 'Présenter les résultats dans un tableau solution / pH / caractère.'],
+        definitions: ['Solution aqueuse : solution dont le solvant est l’eau.', 'Solution acide : pH < 7 ; solution neutre : pH proche de 7 ; solution basique : pH > 7.', 'Ion oxonium H3O+ : espèce associée au caractère acide en solution aqueuse.'],
+        principles: ['Plus la concentration en ions H3O+ est grande, plus le pH est faible.', 'Le pH n’indique pas seul le danger : il faut aussi regarder concentration, pictogrammes et conditions d’utilisation.'],
+        formulas: ['Classement : pH < 7 acide ; pH ≈ 7 neutre ; pH > 7 basique.', 'Terminale : pH = -log[H3O+], avec [H3O+] en mol/L.', '[H3O+] = 10^(-pH) en mol/L.'],
+        units: ['pH : sans unité.', '[H3O+] : mol/L.', 'Température usuelle : pH neutre proche de 7 vers 25 °C.'],
+        method: ['Étalonner/rincer le pH-mètre si utilisé.', 'Mesurer chaque solution.', 'Reporter la valeur.', 'Classer et conclure.'],
+        example: 'Si pH = 3, alors pH < 7 : la solution est acide. Si pH = 10, alors elle est basique.',
+        traps: ['Dire “pH 3 donc très dangereux” sans regarder la concentration.', 'Confondre pH et concentration massique.', 'Oublier la sécurité : ne jamais goûter ni sentir.']
+      },
+      rev_dilution: {
+        knowledge: ['Distinguer solution mère et solution fille.', 'Comprendre que diluer diminue la concentration sans changer l’espèce dissoute.', 'Connaître la verrerie adaptée : pipette jaugée, propipette, fiole jaugée.'],
+        skills: ['Réaliser une dilution avec verrerie jaugée.', 'Calculer un facteur de dilution simple.', 'Rédiger un protocole ordonné et sécurisé.'],
+        definitions: ['Solution mère : solution initiale plus concentrée.', 'Solution fille : solution obtenue après dilution.', 'Facteur de dilution F : rapport entre concentration mère et concentration fille.'],
+        principles: ['Lors d’une dilution, la quantité de soluté prélevée est conservée.', 'Ajouter du solvant augmente le volume total et diminue la concentration.'],
+        formulas: ['Conservation : Cmère x Vprélevé = Cfille x Vfiole.', 'Facteur : F = Cmère / Cfille = Vfiole / Vprélevé.', 'Concentration massique : Cm = m / V.'],
+        units: ['Cm : g/L.', 'C : mol/L.', 'Volumes : L ou mL, mais unités cohérentes dans le calcul.'],
+        method: ['Prélever la solution mère avec pipette + propipette.', 'Verser dans la fiole jaugée.', 'Compléter au trait de jauge.', 'Boucher et homogénéiser.'],
+        example: 'Pour F = 10 avec une fiole de 100 mL, il faut prélever 10 mL de solution mère.',
+        traps: ['Dépasser le trait de jauge et continuer quand même.', 'Utiliser une éprouvette pour une dilution précise.', 'Oublier d’homogénéiser.']
+      },
+      rev_ions: {
+        knowledge: ['Savoir qu’un ion est une espèce chimique chargée.', 'Connaître le test des ions chlorure par le nitrate d’argent.', 'Distinguer observation et conclusion.'],
+        skills: ['Réaliser un test caractéristique.', 'Utiliser témoin positif et témoin négatif.', 'Interpréter un précipité.'],
+        definitions: ['Ion : atome ou groupe d’atomes ayant gagné ou perdu des électrons.', 'Précipité : solide formé lors d’une réaction en solution.', 'Témoin positif : échantillon dont on sait qu’il contient l’espèce recherchée.'],
+        principles: ['Un test caractéristique doit produire une observation spécifique.', 'Les témoins permettent de valider la lecture du résultat.'],
+        formulas: ['Ion chlorure : Cl-.', 'Ion argent : Ag+.', 'Réaction simplifiée : Ag+ + Cl- -> AgCl(s), précipité blanc.'],
+        units: ['Pas d’unité principale ici : on raisonne en espèces chimiques et observations.', 'Les concentrations éventuelles peuvent être en mol/L.'],
+        method: ['Mettre quelques mL d’échantillon dans un tube.', 'Ajouter quelques gouttes de nitrate d’argent.', 'Observer.', 'Conclure avec les témoins.'],
+        example: 'J’observe un précipité blanc après ajout de nitrate d’argent : j’en conclus que des ions chlorure sont présents.',
+        traps: ['Écrire directement “il y a des ions” sans observation.', 'Confondre couleur de solution et précipité.', 'Ne pas prévoir la gestion des déchets.']
+      },
+      rev_dosage: {
+        knowledge: ['Définir un dosage comme une méthode pour déterminer une concentration inconnue.', 'Comprendre la notion d’équivalence.', 'Savoir repérer une équivalence sur une courbe pH = f(V).'],
+        skills: ['Réaliser ou exploiter un dosage pH-métrique.', 'Tracer ou lire une courbe de dosage.', 'Identifier le volume équivalent.'],
+        definitions: ['Solution titrée : solution dont on cherche la concentration.', 'Solution titrante : solution de concentration connue ajoutée progressivement.', 'Équivalence : moment où les réactifs sont introduits dans les proportions stœchiométriques.'],
+        principles: ['En pH-métrie, l’équivalence se repère par une variation rapide du pH.', 'Autour de l’équivalence, il faut resserrer les ajouts pour mieux localiser Veq.'],
+        formulas: ['À l’équivalence : relation stœchiométrique selon l’équation support.', 'Cas simple 1:1 : C1 x V1 = C2 x Veq.', 'Courbe exploitée : pH = f(V ajouté).'],
+        units: ['Concentration : mol/L.', 'Volume : L ou mL, cohérent dans le calcul.', 'pH : sans unité.'],
+        method: ['Installer burette, bécher et pH-mètre.', 'Ajouter le titrant par volumes connus.', 'Relever pH après chaque ajout.', 'Tracer la courbe et repérer Veq.'],
+        example: 'Si une réaction acide/base est 1:1 et que Veq = 12,0 mL, on utilise Cacide x Vacide = Cbase x 12,0 mL.',
+        traps: ['Confondre fin du dosage et équivalence.', 'Ne pas rincer la sonde.', 'Présenter un calcul sans expliquer ce que les élèves mesurent.']
+      },
+      rev_corrosion: {
+        knowledge: ['Savoir que la corrosion du fer est une transformation chimique lente.', 'Identifier eau, dioxygène et sels comme facteurs favorisant la corrosion.', 'Connaître des méthodes de protection.'],
+        skills: ['Comparer des témoins de corrosion.', 'Relier observation et condition expérimentale.', 'Proposer une protection adaptée à un contexte.'],
+        definitions: ['Corrosion : dégradation chimique d’un métal par le milieu extérieur.', 'Rouille : produit de corrosion du fer en présence d’eau et de dioxygène.', 'Protection sacrificielle : protection par oxydation préférentielle d’un autre métal.'],
+        principles: ['La corrosion est accélérée par l’eau salée.', 'Peinture, vernis ou huile limitent le contact avec eau/dioxygène.', 'Un témoin est indispensable car la transformation est lente.'],
+        formulas: ['Oxydation simplifiée du fer : Fe -> Fe2+ + 2 e-.', 'Réduction du dioxygène en milieu aqueux : O2 + 2 H2O + 4 e- -> 4 HO-.', 'La rouille est un mélange d’oxydes/hydroxydes de fer hydratés.'],
+        units: ['Pas de formule quantitative prioritaire au niveau séance ; on raisonne sur conditions et observations.'],
+        method: ['Comparer clou sec, clou dans eau, clou dans eau salée, clou protégé.', 'Observer couleur/dépôt.', 'Relier chaque résultat au facteur étudié.', 'Conclure sur la protection.'],
+        example: 'Le clou dans l’eau salée rouille davantage : le sel accélère la corrosion.',
+        traps: ['Faire le TP sans échantillons préparés.', 'Dire que seul l’eau suffit toujours.', 'Oublier le lien professionnel : pont, carrosserie, canalisation.']
+      },
+      rev_thermique: {
+        knowledge: ['Distinguer température et transfert thermique.', 'Savoir qu’un isolant ralentit les échanges thermiques.', 'Comprendre la nécessité de variables contrôlées.'],
+        skills: ['Mesurer une température au cours du temps.', 'Tracer et comparer deux courbes T = f(t).', 'Identifier le meilleur isolant expérimentalement.'],
+        definitions: ['Température : grandeur mesurée en °C ou K.', 'Transfert thermique : énergie échangée à cause d’une différence de température.', 'Isolant : matériau qui limite les transferts thermiques.'],
+        principles: ['Pour comparer deux isolants, toutes les conditions doivent être identiques sauf l’isolant.', 'Le meilleur isolant donne une baisse de température plus lente.'],
+        formulas: ['Énergie thermique : Q = m x c x ΔT.', 'Puissance thermique : P = E / t.', 'Variation : ΔT = Tfinale - Tinitiale.'],
+        units: ['Q ou E : joule (J).', 'm : kg ; c : J.kg-1.K-1 ; ΔT : K ou °C pour une variation.', 'P : watt (W).'],
+        method: ['Même volume, même température initiale, même durée.', 'Relever T toutes les 2 min.', 'Tracer T = f(t).', 'Comparer les pentes.'],
+        example: 'Si la courbe B descend moins vite que la courbe A, l’isolant B limite mieux les échanges thermiques.',
+        traps: ['Changer volume et isolant en même temps.', 'Dire qu’un isolant “fabrique du chaud”.', 'Lire une courbe sans regarder les axes.']
+      },
+      rev_capteur: {
+        knowledge: ['Définir un capteur comme un dispositif convertissant une grandeur physique en signal.', 'Connaître la chaîne de mesure.', 'Savoir exploiter une courbe obtenue par acquisition.'],
+        skills: ['Brancher et utiliser une sonde de température.', 'Lire une courbe T = f(t).', 'Identifier grandeur mesurée, capteur, signal et interface.'],
+        definitions: ['Grandeur physique : propriété mesurable comme température, pression, tension.', 'Signal : information électrique ou numérique produite par le capteur.', 'ExAO : expérimentation assistée par ordinateur.'],
+        principles: ['Un capteur doit être adapté à la grandeur et au domaine de mesure.', 'La courbe obtenue doit être interprétée : tendance, valeurs, unités, incertitudes possibles.'],
+        formulas: ['Fréquence d’échantillonnage : nombre de mesures par seconde si acquisition rapide.', 'Variation de température : ΔT = T2 - T1.', 'Pour une puissance moyenne : P = E / t si l’énergie est étudiée.'],
+        units: ['Température : °C ou K.', 'Temps : s ou min.', 'Signal selon capteur : V, bit, valeur numérique.'],
+        method: ['Vérifier la sonde.', 'Lancer l’acquisition.', 'Observer la courbe.', 'Lire une valeur et conclure.'],
+        example: 'La courbe passe de 55 °C à 35 °C en 10 min : le système se refroidit progressivement.',
+        traps: ['Croire que le capteur donne toujours une valeur exacte.', 'Oublier les unités des axes.', 'Ne pas prévoir de courbe secours.']
+      },
+      rev_ohm: {
+        knowledge: ['Connaître la relation U = R x I pour un conducteur ohmique.', 'Savoir brancher ampèremètre et voltmètre.', 'Comprendre la proportionnalité entre U et I.'],
+        skills: ['Réaliser un montage basse tension.', 'Mesurer plusieurs couples U/I.', 'Tracer U = f(I) et déterminer R.'],
+        definitions: ['Tension U : différence de potentiel aux bornes d’un dipôle.', 'Intensité I : débit de charges dans le circuit.', 'Résistance R : grandeur qui caractérise l’opposition au passage du courant.'],
+        principles: ['Un ampèremètre se branche en série.', 'Un voltmètre se branche en dérivation.', 'Pour un conducteur ohmique, le graphique U = f(I) est une droite.'],
+        formulas: ['Loi d’Ohm : U = R x I.', 'R = U / I.', 'Conductance éventuelle : G = 1 / R.'],
+        units: ['U : volt (V).', 'I : ampère (A).', 'R : ohm (Ω).'],
+        method: ['Montage hors tension.', 'Faire valider le câblage.', 'Mesurer U et I pour plusieurs réglages.', 'Tracer la droite et lire la pente.'],
+        example: 'Si U = 6,0 V et I = 0,20 A, alors R = U/I = 30 Ω.',
+        traps: ['Brancher le voltmètre en série.', 'Utiliser mA sans convertir en A.', 'Relier des points non alignés sans discuter les erreurs de mesure.']
+      },
+      rev_puissance: {
+        knowledge: ['Distinguer puissance et énergie.', 'Connaître P = U x I en courant continu.', 'Relier énergie consommée, puissance et durée.'],
+        skills: ['Lire une plaque signalétique.', 'Mesurer U et I.', 'Calculer une énergie en Wh ou kWh.'],
+        definitions: ['Puissance : énergie transférée par unité de temps.', 'Énergie : grandeur consommée ou transformée pendant une durée.', 'Rendement : rapport entre énergie ou puissance utile et reçue.'],
+        principles: ['Un appareil puissant ne consomme beaucoup d’énergie que s’il fonctionne assez longtemps.', 'Les pertes expliquent qu’un rendement réel soit inférieur à 100 %.'],
+        formulas: ['P = U x I.', 'E = P x t.', 'Rendement : η = Putile / Preçue.'],
+        units: ['P : W.', 'E : J, Wh ou kWh.', 't : s ou h selon l’unité d’énergie.'],
+        method: ['Identifier P sur la plaque ou calculer P.', 'Identifier la durée.', 'Convertir si nécessaire.', 'Calculer E.'],
+        example: 'Un appareil de 1000 W utilisé 2 h consomme 2 kWh.',
+        traps: ['Confondre W et kWh.', 'Oublier de convertir minutes en heures.', 'Dire qu’un rendement peut dépasser 100 %.']
+      },
+      rev_son: {
+        knowledge: ['Savoir que le son nécessite un milieu matériel.', 'Connaître le niveau sonore en décibels.', 'Relier mesure sonore et prévention du risque auditif.'],
+        skills: ['Mesurer un niveau sonore.', 'Comparer une valeur à un seuil.', 'Choisir un EPI adapté.'],
+        definitions: ['Onde sonore : vibration qui se propage dans un milieu matériel.', 'Fréquence : nombre de périodes par seconde.', 'Niveau sonore : grandeur exprimée en dB.'],
+        principles: ['Le niveau sonore diminue quand on s’éloigne de la source.', 'Le dB est une échelle non linéaire : on évite les raisonnements proportionnels simples.', 'Le risque dépend du niveau et de la durée d’exposition.'],
+        formulas: ['Fréquence : f = 1 / T.', 'T : période en seconde.', 'Atténuation qualitative : plus la distance augmente, plus le niveau mesuré diminue.'],
+        units: ['Niveau sonore : dB.', 'Fréquence : hertz (Hz).', 'Période : seconde (s).'],
+        method: ['Mesurer avec sonomètre.', 'Noter source, distance, niveau.', 'Comparer à des seuils.', 'Proposer prévention.'],
+        example: 'Si le niveau mesuré dans un atelier est élevé, on réduit l’exposition et on propose des protections auditives.',
+        traps: ['Confondre son et lumière.', 'Oublier la durée d’exposition.', 'Dire “deux fois plus de dB = deux fois plus fort” sans nuance.']
+      },
+      rev_optique: {
+        knowledge: ['Connaître les lois de réflexion.', 'Comprendre la réfraction et les lois de Snell-Descartes.', 'Savoir que les angles se mesurent par rapport à la normale.'],
+        skills: ['Tracer rayon incident, réfléchi, réfracté et normale.', 'Mesurer des angles au rapporteur.', 'Exploiter un montage avec miroir, lentille ou plexiglas.'],
+        definitions: ['Normale : droite perpendiculaire à la surface au point d’incidence.', 'Réflexion : retour de la lumière dans le même milieu.', 'Réfraction : changement de direction lors du passage dans un autre milieu.'],
+        principles: ['Réflexion : angle incident = angle réfléchi.', 'Réfraction : la direction dépend des indices optiques des deux milieux.', 'Réflexion totale possible au-delà d’un angle limite si n1 > n2.'],
+        formulas: ['Réflexion : i = r.', 'Snell-Descartes : n1 sin(i1) = n2 sin(i2).', 'Lentille mince : vergence C = 1 / f avec f en m, C en dioptries.'],
+        units: ['Angles : degré (°).', 'Indice n : sans unité.', 'Distance focale f : m ; vergence C : dioptrie (δ).'],
+        method: ['Tracer la normale.', 'Tracer le rayon incident.', 'Mesurer les angles par rapport à la normale.', 'Appliquer la loi adaptée.'],
+        example: 'Si i = 30° sur un miroir plan, alors r = 30°.',
+        traps: ['Mesurer les angles par rapport à la surface.', 'Confondre réflexion et réfraction.', 'Diriger la source lumineuse vers les yeux.']
+      },
+      rev_fluide: {
+        knowledge: ['Distinguer gaz compressible et liquide incompressible.', 'Connaître la relation hydrostatique reliant différence de pression et hauteur.', 'Connaître le principe de Pascal et la presse hydraulique.'],
+        skills: ['Mesurer une pression à différentes profondeurs.', 'Exploiter Δp = ρ g h.', 'Illustrer le fonctionnement d’une presse ou d’un vérin hydraulique.'],
+        definitions: ['Fluide incompressible : fluide dont le volume varie très peu sous l’effet d’une pression.', 'Fluide au repos : fluide à l’équilibre sans mouvement global.', 'Pression : force exercée par unité de surface.'],
+        principles: ['Dans un liquide au repos, la pression augmente avec la profondeur.', 'Principe de Pascal : une variation de pression se transmet intégralement dans toutes les directions dans un fluide incompressible au repos.', 'Une presse hydraulique multiplie la force grâce au rapport des surfaces.'],
+        formulas: ['Pression : p = F / S.', 'Hydrostatique : pbas - phaut = ρ g h.', 'Pascal/presse : p1 = p2 donc F1/S1 = F2/S2.', 'Multiplication : F2/F1 = S2/S1.'],
+        units: ['p : pascal (Pa).', 'F : newton (N).', 'S : m².', 'ρ : kg/m³.', 'g ≈ 9,8 N/kg.', 'h : m.'],
+        method: ['Repérer le point haut et le point bas.', 'Calculer la hauteur h.', 'Identifier la masse volumique ρ.', 'Appliquer Δp = ρ g h puis conclure.'],
+        example: 'Dans l’eau, ρ ≈ 1000 kg/m³. Pour h = 2,0 m : Δp = 1000 x 9,8 x 2,0 = 19 600 Pa.',
+        traps: ['Inverser point haut et point bas.', 'Oublier h en mètres.', 'Confondre force et pression.', 'Écrire F2/F1 = S1/S2 au lieu de S2/S1.']
+      }
+    };
+
     const diagnosticDefaults = {
       Chimie: {
         formulas: ['Concentration en masse : Cm = m / V', 'Concentration molaire : C = n / V', 'Quantité de matière : n = m / M', 'Dilution : Cmere × Vpreleve = Cfille × Vfiole', 'pH < 7 acide ; pH ≈ 7 neutre ; pH > 7 basique'],
@@ -2284,6 +2630,58 @@
       setMode('tp');
     }
 
+    function getDetailedCourse(card, bo) {
+      if (detailedCourseBank[card.id]) return detailedCourseBank[card.id];
+      const diag = getDiagnosticData(card);
+      return {
+        knowledge: bo.points?.slice(0, 3) || card.course,
+        skills: ['Réaliser ou exploiter une mesure expérimentale.', 'Identifier les grandeurs utiles et leurs unités.', 'Relier le résultat à un contexte professionnel.'],
+        definitions: card.course,
+        principles: ['Partir d’une situation concrète, mesurer, exploiter puis institutionnaliser.', 'Distinguer les faits observés, les calculs et la conclusion scientifique.'],
+        formulas: diag.formulas || ['Formule à identifier selon la situation.'],
+        units: ['Toujours écrire grandeur, valeur et unité.', 'Convertir avant de calculer si les unités ne sont pas cohérentes.'],
+        method: ['Lire la situation.', 'Identifier les grandeurs connues et inconnues.', 'Choisir la relation.', 'Calculer avec unités.', 'Interpréter le résultat.'],
+        example: 'Méthode-type : je repère la grandeur demandée, je choisis la relation du cours, je remplace par les valeurs avec unités, puis je conclus en phrase.',
+        traps: ['Appliquer une formule sans nommer les grandeurs.', 'Oublier les unités.', 'Confondre observation et conclusion.']
+      };
+    }
+
+    function renderDetailedCourse(card, bo) {
+      const sheet = getDetailedCourse(card, bo);
+      const section = (title, items, open = false, extraClass = '') => `
+        <details ${open ? 'open' : ''}>
+          <summary>${title}</summary>
+          <div class="courseSheetContent ${extraClass}">
+            <ul class="clean">${items.map(item => `<li>${item}</li>`).join('')}</ul>
+          </div>
+        </details>
+      `;
+      return `
+        <div class="courseSheet">
+          <div class="courseSheetHeader">
+            <div>
+              <h4>Connaissances (à savoir)</h4>
+              <ul class="clean">${sheet.knowledge.map(item => `<li>${item}</li>`).join('')}</ul>
+            </div>
+            <div>
+              <h4>Capacités (à savoir faire)</h4>
+              <ul class="clean">${sheet.skills.map(item => `<li>${item}</li>`).join('')}</ul>
+            </div>
+          </div>
+          ${section('1. Définitions indispensables', sheet.definitions, true)}
+          ${section('2. Principes de cours', sheet.principles, true)}
+          ${section('3. Formules à connaître', sheet.formulas, true, 'formulaList')}
+          ${section('4. Unités et conversions', sheet.units)}
+          ${section('5. Méthode type pour résoudre un exercice', sheet.method)}
+          <details open>
+            <summary>6. Exemple corrigé très court</summary>
+            <div class="courseSheetContent"><div class="exampleBox">${sheet.example}</div></div>
+          </details>
+          ${section('7. Erreurs fréquentes à surveiller', sheet.traps)}
+        </div>
+      `;
+    }
+
     function showJuryAnswer() {
       const questions = getJuryQuestions(state.selectedRevision);
       const item = questions[el.juryQuestionSelect.selectedIndex] || questions[0];
@@ -2335,6 +2733,7 @@
         <h3>${card.title}</h3>
         <div>${card.tags.map(t => `<span class="pill violet">${t}</span>`).join('')}</div>
         <ul class="clean">${card.course.map(x => `<li>${x}</li>`).join('')}</ul>
+        ${renderDetailedCourse(card, bo)}
         <div class="visualBox">
           <h4>${visual.title}</h4>
           ${visual.svg}
