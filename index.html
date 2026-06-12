@@ -82,7 +82,7 @@
       background: #f9fafb;
       color: #111827;
     }
-    #workPanel, #revisionPanel, #tpPanel {
+    #workPanel, #revisionPanel, #tpPanel, #simulationPanel, #progressPanel {
       position: fixed;
       top: 82px;
       right: 18px;
@@ -97,7 +97,7 @@
       border-radius: 8px;
       padding: 18px;
     }
-    #revisionPanel, #tpPanel { display: none; left: 18px; right: auto; width: 560px; }
+    #revisionPanel, #tpPanel, #simulationPanel, #progressPanel { display: none; left: 18px; right: auto; width: 560px; }
     h2 {
       margin: 0 0 4px 0;
       font-size: 20px;
@@ -205,6 +205,30 @@
     }
     .miniCard strong { display: block; font-size: 13px; margin-bottom: 4px; }
     .miniCard span { display: block; color: #667085; font-size: 12px; line-height: 1.25; }
+    .miniCard .progressBadges {
+      display: flex;
+      gap: 4px;
+      margin-top: 7px;
+      color: #64748b;
+    }
+    .progressBadge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      border: 1px solid #cbd5e1;
+      background: #f8fafc;
+      color: #64748b;
+      font-size: 11px;
+      font-weight: 900;
+    }
+    .progressBadge.done {
+      background: #dcfce7;
+      border-color: #86efac;
+      color: #166534;
+    }
     .miniCard.active {
       border-color: #2563eb;
       box-shadow: 0 0 0 3px rgba(37,99,235,.12);
@@ -325,9 +349,117 @@
       border-radius: 6px;
       margin-top: 8px;
     }
+    .progressActions {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin: 12px 0;
+    }
+    .checkBtn {
+      border: 1px solid #cbd5e1;
+      background: #ffffff;
+      color: #1f2937;
+      border-radius: 8px;
+      padding: 10px;
+      cursor: pointer;
+      font-weight: 800;
+      font-size: 12px;
+      text-align: center;
+    }
+    .checkBtn.done {
+      border-color: #22c55e;
+      background: #dcfce7;
+      color: #166534;
+    }
+    .progressMeters {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin: 12px 0;
+    }
+    .meterBox {
+      border: 1px solid #d7dee8;
+      background: #ffffff;
+      border-radius: 8px;
+      padding: 11px;
+    }
+    .meterBox strong {
+      display: block;
+      font-size: 22px;
+      color: #0f172a;
+      margin-bottom: 3px;
+    }
+    .meterBar {
+      height: 8px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      overflow: hidden;
+      margin-top: 8px;
+    }
+    .meterFill {
+      height: 100%;
+      width: 0%;
+      background: #2563eb;
+    }
+    .progressTable {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: 12px;
+    }
+    .progressTable th,
+    .progressTable td {
+      border-bottom: 1px solid #e5e7eb;
+      padding: 8px 6px;
+      text-align: left;
+      vertical-align: top;
+    }
+    .progressTable th {
+      color: #334155;
+      background: #f8fafc;
+    }
+    .simSection {
+      border: 1px solid #d7dee8;
+      background: #ffffff;
+      border-radius: 8px;
+      padding: 12px;
+      margin-top: 12px;
+    }
+    .simSection h3 {
+      margin-top: 0;
+    }
+    .simTimeline {
+      counter-reset: simstep;
+      list-style: none;
+      margin: 8px 0 0 0;
+      padding: 0;
+    }
+    .simTimeline li {
+      position: relative;
+      padding: 8px 8px 8px 36px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+    .simTimeline li::before {
+      counter-increment: simstep;
+      content: counter(simstep);
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      background: #2563eb;
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 900;
+    }
     @media (max-width: 720px) {
       .courseSheetHeader { grid-template-columns: 1fr; }
       .courseSheetHeader div + div { border-left: 0; border-top: 1px solid #bfdbfe; }
+      .progressActions, .progressMeters { grid-template-columns: 1fr; }
     }
     .deepBox {
       border-left: 4px solid #2563eb;
@@ -379,7 +511,7 @@
       body { overflow: auto; background: #111827; }
       #appHeader { position: sticky; height: auto; display: block; padding: 12px; }
       .modeTabs { margin-top: 10px; }
-      #workPanel, #revisionPanel, #tpPanel {
+      #workPanel, #revisionPanel, #tpPanel, #simulationPanel, #progressPanel {
         position: relative;
         top: auto;
         left: auto;
@@ -405,6 +537,8 @@
       <button id="oralModeBtn" class="active" type="button">Préparer l’oral</button>
       <button id="revisionModeBtn" type="button">Révision</button>
       <button id="tpModeBtn" type="button">TP</button>
+      <button id="simulationModeBtn" type="button">Simulation de cours</button>
+      <button id="progressModeBtn" type="button">Progression</button>
     </nav>
   </header>
 
@@ -550,8 +684,37 @@
     <div id="tpContent" class="courseBox"></div>
   </aside>
 
+  <aside id="simulationPanel">
+    <h2>Simulation de cours</h2>
+    <p class="focusLine">Choisis un thème pour obtenir une préparation complète type oral CAPLP : attendus jury, contextualisation, TP, matériel, réalisation et trace écrite.</p>
+
+    <label for="simulationThemeSelect">Sujet à simuler</label>
+    <select id="simulationThemeSelect"></select>
+
+    <div class="toolbar">
+      <button id="randomSimulationBtn" class="primaryBtn" type="button">Simulation aléatoire</button>
+      <button id="syncSimulationBtn" class="ghostBtn" type="button">Reprendre la notion révision</button>
+    </div>
+
+    <div id="simulationContent" class="courseBox"></div>
+  </aside>
+
+  <aside id="progressPanel">
+    <h2>Progression</h2>
+    <p class="focusLine">Suis ce que tu as déjà lu, travaillé en QCM et révisé en TP. La progression est sauvegardée dans ce navigateur.</p>
+
+    <div id="progressSummary" class="courseBox"></div>
+
+    <div class="toolbar">
+      <button id="progressRefreshBtn" class="primaryBtn" type="button">Actualiser</button>
+      <button id="progressResetBtn" class="ghostBtn dangerBtn" type="button">Réinitialiser la progression</button>
+    </div>
+
+    <div id="progressDetails" class="courseBox"></div>
+  </aside>
+
   <div id="legend">
-    <b>Navigation :</b> clique-glisse pour tourner, molette pour zoomer, clic sur une carte pour préparer l’oral. Les modes Révision et TP donnent les fiches, QCM et montages.
+    <b>Navigation :</b> clique-glisse pour tourner, molette pour zoomer, clic sur une carte pour préparer l’oral. Les modes Révision, TP et Progression organisent ton entraînement.
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
@@ -958,6 +1121,39 @@
           'Lien très intéressant avec travaux publics, canalisations, barrages.',
           'Évaluation : lire une pression à une profondeur donnée.'
         ]
+      },
+      {
+        id: 'pneus_gaz_parfait',
+        title: 'Pneus sous-gonflés et gaz parfait',
+        short: 'Pneus',
+        domain: 'Mécanique',
+        levels: ['Première Bac Pro', 'Terminale Bac Pro'],
+        color: 0x0f766e,
+        contexts: [
+          'Pourquoi des pneus sous-gonflés présentent-ils un danger ?',
+          'Sécurité routière : pression des pneus, échauffement, adhérence et consommation.',
+          'Atelier automobile : contrôler une pression au manomètre et interpréter une valeur constructeur.'
+        ],
+        objectives: [
+          'Relier pression, volume, quantité de matière et température pour un gaz assimilé à un gaz parfait.',
+          'Expliquer qualitativement l’effet d’un sous-gonflage sur la déformation et l’échauffement du pneu.',
+          'Exploiter une mesure de pression et convertir les unités usuelles.'
+        ],
+        activities: [
+          'Mesurer la pression d’un volume d’air enfermé à l’aide d’un capteur ou manomètre.',
+          'Comparer pression à froid et pression après échauffement contrôlé ou sur jeu de données.',
+          'Exploiter la loi des gaz parfaits ou Boyle-Mariotte pour expliquer une variation.'
+        ],
+        traces: [
+          'Pour un gaz parfait : pV = nRT, avec T en kelvins.',
+          'À quantité de gaz et volume presque constants, une hausse de température augmente la pression.',
+          'Un pneu sous-gonflé se déforme davantage : il chauffe, s’use plus vite et dégrade la tenue de route.'
+        ],
+        jury: [
+          'Sécurité : ne pas surgonfler, utiliser faibles pressions en maquette, ne pas chauffer un pneu réel.',
+          'Prévoir une courbe ou un tableau secours pression-température.',
+          'Évaluation : expliquer en trois phrases le danger d’un pneu sous-gonflé avec p, V, n, T.'
+        ]
       }
     ];
 
@@ -1340,6 +1536,25 @@
           options: ['la vitesse augmente et la pression diminue', 'la vitesse diminue toujours', 'la pression devient le pH', 'le débit devient une température'],
           answer: 0,
           correction: 'Dans le rétrécissement, la vitesse augmente et la pression diminue dans le modèle Venturi.'
+        }
+      },
+      {
+        id: 'rev_pneus_gaz',
+        title: 'Pneus sous-gonflés et gaz parfait',
+        domain: 'Mécanique',
+        level: 'Première Bac Pro',
+        tags: ['pression', 'gaz parfait', 'sécurité routière'],
+        course: [
+          'Un pneu contient de l’air, que l’on peut modéliser comme un gaz parfait dans une première approche.',
+          'Le modèle du gaz parfait relie pression, volume, quantité de matière et température : pV = nRT.',
+          'Un pneu sous-gonflé contient moins d’air : il se déforme davantage, chauffe plus et adhère moins bien.',
+          'Le danger se relie à la tenue de route, à l’usure, à la consommation et au risque d’éclatement.'
+        ],
+        qcm: {
+          question: 'Dans le modèle du gaz parfait, la relation d’état est :',
+          options: ['pV = nRT', 'p = F/S uniquement', 'U = R x I', 'Qv = V/t'],
+          answer: 0,
+          correction: 'L’équation d’état du gaz parfait est pV = nRT, avec T en kelvins.'
         }
       }
     ];
@@ -1780,7 +1995,8 @@
       rev_concentration_titrage: { title: 'Étalonnage / titrage', caption: 'Courbe d’étalonnage pour méthode non destructive ; titrage pour méthode destructive.', svg: `<svg viewBox="0 0 520 230"><rect width="520" height="230" fill="#fff"/><line x1="60" y1="180" x2="250" y2="180" stroke="#111827"/><line x1="60" y1="180" x2="60" y2="45" stroke="#111827"/><line x1="70" y1="165" x2="235" y2="62" stroke="#2563eb" stroke-width="4"/><circle cx="115" cy="136" r="5" fill="#2563eb"/><circle cx="170" cy="101" r="5" fill="#2563eb"/><text x="100" y="35" font-size="14">étalonnage</text><line x1="310" y1="180" x2="470" y2="180" stroke="#111827"/><line x1="310" y1="180" x2="310" y2="45" stroke="#111827"/><path d="M320 160 C370 155 390 90 455 70" fill="none" stroke="#b91c1c" stroke-width="4"/><text x="350" y="35" font-size="14">titrage</text></svg>` },
       rev_chromato_synthese: { title: 'Chromatogramme', caption: 'Comparer les hauteurs des taches pour identifier une espèce.', svg: `<svg viewBox="0 0 520 230"><rect width="520" height="230" fill="#fff"/><rect x="150" y="35" width="220" height="160" fill="#f8fafc" stroke="#334155" stroke-width="3"/><line x1="150" y1="165" x2="370" y2="165" stroke="#64748b" stroke-width="2"/><circle cx="200" cy="125" r="13" fill="#60a5fa"/><circle cx="260" cy="80" r="13" fill="#f59e0b"/><circle cx="320" cy="125" r="13" fill="#60a5fa"/><text x="200" y="212" text-anchor="middle" font-size="14">A</text><text x="260" y="212" text-anchor="middle" font-size="14">B</text><text x="320" y="212" text-anchor="middle" font-size="14">Mélange</text></svg>` },
       rev_lentille_spectre: { title: 'Lentille convergente', caption: 'Former une image nette et relier la position de l’écran à la distance focale.', svg: `<svg viewBox="0 0 520 230"><rect width="520" height="230" fill="#fff"/><line x1="35" y1="115" x2="485" y2="115" stroke="#64748b" stroke-width="2"/><path d="M245 40 C280 80 280 150 245 190 C225 150 225 80 245 40" fill="#dbeafe" stroke="#2563eb" stroke-width="3"/><line x1="80" y1="80" x2="245" y2="115" stroke="#dc2626" stroke-width="3"/><line x1="245" y1="115" x2="410" y2="150" stroke="#dc2626" stroke-width="3"/><rect x="410" y="65" width="8" height="105" fill="#111827"/><path d="M80 80 v70" stroke="#111827" stroke-width="5"/><text x="80" y="170" text-anchor="middle" font-size="13">objet</text><text x="245" y="210" text-anchor="middle" font-size="13">lentille</text><text x="415" y="190" text-anchor="middle" font-size="13">écran</text></svg>` },
-      rev_debit_venturi: { title: 'Tube de Venturi', caption: 'Section plus faible → vitesse plus grande → pression plus faible.', svg: `<svg viewBox="0 0 520 230"><rect width="520" height="230" fill="#fff"/><path d="M55 85 H190 C235 85 235 145 280 145 H465 V170 H280 C220 170 220 110 190 110 H55 Z" fill="#dbeafe" stroke="#2563eb" stroke-width="3"/><path d="M80 125 h100 M300 157 h100" stroke="#0f766e" stroke-width="4" marker-end="url(#v)"/><line x1="140" y1="85" x2="140" y2="45" stroke="#64748b" stroke-width="4"/><line x1="360" y1="145" x2="360" y2="65" stroke="#64748b" stroke-width="4"/><text x="120" y="38" font-size="13">P forte</text><text x="340" y="58" font-size="13">P faible</text><defs><marker id="v" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#0f766e"/></marker></defs></svg>` }
+      rev_debit_venturi: { title: 'Tube de Venturi', caption: 'Section plus faible → vitesse plus grande → pression plus faible.', svg: `<svg viewBox="0 0 520 230"><rect width="520" height="230" fill="#fff"/><path d="M55 85 H190 C235 85 235 145 280 145 H465 V170 H280 C220 170 220 110 190 110 H55 Z" fill="#dbeafe" stroke="#2563eb" stroke-width="3"/><path d="M80 125 h100 M300 157 h100" stroke="#0f766e" stroke-width="4" marker-end="url(#v)"/><line x1="140" y1="85" x2="140" y2="45" stroke="#64748b" stroke-width="4"/><line x1="360" y1="145" x2="360" y2="65" stroke="#64748b" stroke-width="4"/><text x="120" y="38" font-size="13">P forte</text><text x="340" y="58" font-size="13">P faible</text><defs><marker id="v" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#0f766e"/></marker></defs></svg>` },
+      rev_pneus_gaz: { title: 'Pneu, pression et échauffement', caption: 'Sous-gonflage : moins d’air, plus de déformation, échauffement et danger routier.', svg: `<svg viewBox="0 0 520 230"><rect width="520" height="230" fill="#fff"/><circle cx="165" cy="118" r="72" fill="#111827"/><circle cx="165" cy="118" r="42" fill="#f8fafc" stroke="#64748b" stroke-width="4"/><path d="M105 160 C135 188 195 188 225 160" fill="none" stroke="#ef4444" stroke-width="8"/><text x="165" y="212" text-anchor="middle" font-size="14">pneu sous-gonflé : forte déformation</text><rect x="305" y="62" width="130" height="86" rx="10" fill="#eff6ff" stroke="#2563eb" stroke-width="3"/><text x="370" y="95" text-anchor="middle" font-size="14">pV = nRT</text><text x="370" y="121" text-anchor="middle" font-size="13">T en K</text><path d="M250 118 h45" stroke="#0f766e" stroke-width="4" marker-end="url(#pg)"/><path d="M440 75 l35-22 M440 105 l45 0 M440 135 l35 22" stroke="#f97316" stroke-width="4"/><text x="332" y="180" font-size="14">p, V, n, T</text><defs><marker id="pg" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#0f766e"/></marker></defs></svg>` }
     };
 
     const boBank = {
@@ -1883,6 +2099,11 @@
         level: 'Terminale Bac Pro',
         module: 'Mécanique des fluides - débit, vitesse, Venturi',
         points: ['Décrire transport de masse ou volume par un fluide en mouvement.', 'Calculer une vitesse moyenne.', 'Connaître le débit en volume.', 'Savoir que l’effet Venturi relie vitesse élevée et pression plus faible.']
+      },
+      rev_pneus_gaz: {
+        level: 'Première Bac Pro',
+        module: 'Pression dans un fluide - gaz parfait, pression et sécurité',
+        points: ['Distinguer pression et force pressante.', 'Mesurer la pression en un point d’un fluide.', 'Calculer une pression et la convertir dans une unité adaptée.', 'Vérifier expérimentalement la loi de Boyle-Mariotte.', 'Connaître les définitions de la pression, de la surface pressée et de la force pressante.', 'Savoir que la pression se mesure à l’aide d’un manomètre.', 'Connaître l’unité SI de pression et des unités courantes.', 'Connaître la relation entre pression, volume, quantité de matière et température pour un gaz considéré comme parfait.']
       }
     };
 
@@ -2066,6 +2287,15 @@
         observations: ['À débit donné, la vitesse augmente dans le rétrécissement.', 'La pression y est plus faible dans le modèle Venturi.', 'Débit et vitesse ne sont pas la même grandeur.'],
         exploitation: 'Relier Qv = V/t, vitesse moyenne et effet Venturi à des contextes : canalisation, ventilation, pulvérisateur.',
         safety: 'Montage stable ; éviter les projections ; privilégier une simulation si le matériel de pression manque.'
+      },
+      rev_pneus_gaz: {
+        title: 'Modéliser un pneu sous-gonflé par une seringue ou une bouteille manométrée',
+        duration: 'TP guidé 45 min',
+        material: ['seringue graduée bouchée ou bouteille plastique rigide avec valve', 'capteur de pression ou manomètre basse pression', 'thermomètre ou sonde de température', 'pompe à main', 'tableau p, V, T', 'données constructeur de pression de pneus'],
+        steps: ['Contextualiser avec une affiche ou une donnée sécurité routière : pression recommandée, pression trop faible.', 'Mesurer la pression initiale du volume d’air enfermé.', 'Faire varier doucement le volume avec une seringue bouchée ou exploiter un jeu de données si le matériel manque.', 'Comparer p, V et T, puis relier au modèle pV = nRT.', 'Expliquer pourquoi le sous-gonflage augmente la déformation et l’échauffement du pneu.'],
+        observations: ['Quand le volume diminue à température proche constante, la pression augmente.', 'Si la température augmente à volume et quantité d’air presque constants, la pression augmente.', 'Un pneu sous-gonflé travaille davantage : ses flancs se déforment, il chauffe et perd en efficacité.'],
+        exploitation: 'Faire compléter un tableau : situation, grandeur qui varie, conséquence sur p, risque. Conclure : le modèle gaz parfait aide à comprendre la pression interne, mais le danger vient aussi de la mécanique du pneu.',
+        safety: 'Ne pas chauffer un pneu réel. Ne pas surgonfler. Utiliser uniquement des faibles pressions et un montage prévu pour la classe.'
       }
     };
 
@@ -2201,6 +2431,20 @@
         method: ['Repérer le point haut et le point bas.', 'Calculer la hauteur h.', 'Identifier la masse volumique ρ.', 'Appliquer Δp = ρ g h puis conclure.'],
         example: 'Dans l’eau, ρ ≈ 1000 kg/m³. Pour h = 2,0 m : Δp = 1000 x 9,8 x 2,0 = 19 600 Pa.',
         traps: ['Inverser point haut et point bas.', 'Oublier h en mètres.', 'Confondre force et pression.', 'Écrire F2/F1 = S1/S2 au lieu de S2/S1.']
+      },
+      rev_pneus_gaz: {
+        knowledge: ['Connaître les définitions de pression, force pressante et surface pressée.', 'Savoir que la pression se mesure avec un manomètre.', 'Connaître l’unité SI de pression et les unités usuelles des pneus.', 'Connaître la relation pression-volume-quantité de matière-température pour un gaz parfait.'],
+        skills: ['Mesurer ou exploiter une pression de gaz.', 'Convertir bar, hPa et pascal.', 'Exploiter pV = nRT ou une transformation à quantité de matière constante.', 'Construire une explication scientifique du danger d’un pneu sous-gonflé.'],
+        definitions: ['Pression p : force pressante exercée par unité de surface.', 'Gaz parfait : modèle où les particules sont supposées ponctuelles et sans interaction hors chocs.', 'Équation d’état : relation entre les grandeurs qui décrivent l’état du gaz.', 'Transformation thermodynamique : passage d’un état initial à un état final avec évolution de p, V, T ou n.'],
+        principles: ['Un pneu sous-gonflé contient moins d’air : la pression interne est insuffisante par rapport à la charge du véhicule.', 'La zone de contact au sol augmente et les flancs se déforment davantage.', 'Cette déformation répétée dissipe de l’énergie : le pneu chauffe, s’use, consomme davantage et peut perdre en tenue de route.', 'Le modèle du gaz parfait explique les variations de pression avec température, volume et quantité d’air, mais le danger routier vient aussi de la mécanique du pneu.'],
+        formulas: ['Pression : p = F / S.', 'Gaz parfait : pV = nRT.', 'À n constant : pV/T = constante.', 'Si V et n sont presque constants : p/T = constante.', 'Température absolue : T(K) = θ(°C) + 273,15.', 'Ordres utiles : 1 bar = 100 000 Pa ; pression atmosphérique ≈ 101 325 Pa.'],
+        units: ['p : pascal (Pa), bar ou hPa.', 'V : m³.', 'n : mol.', 'R = 8,314 J.mol-1.K-1.', 'T : kelvin (K), jamais en °C dans pV = nRT.', 'F : newton (N), S : m².'],
+        method: ['Contextualiser : pression constructeur à froid et risque de sous-gonflage.', 'Identifier les grandeurs : p, V, n, T.', 'Choisir le modèle : gaz parfait si l’air est modélisé simplement.', 'Convertir les unités avant calcul.', 'Conclure en séparant pression du gaz et effets mécaniques sur le pneu.'],
+        example: 'Si un pneu est contrôlé à froid à 2,0 bar au lieu de 2,5 bar recommandés, la pression interne est insuffisante : le pneu se déforme plus sous la charge. Si la température augmente ensuite, p peut augmenter, mais cela ne supprime pas le danger initial de sous-gonflage à froid.',
+        traps: ['Utiliser la température en °C dans pV = nRT.', 'Dire que le pneu éclate seulement parce que la pression est trop faible : il faut parler déformation et échauffement.', 'Confondre pression absolue et pression relative lue au manomètre.', 'Oublier que la pression constructeur se vérifie à froid.'],
+        contextualization: 'Situation déclenchante : un automobiliste roule avec des pneus à 1,7 bar alors que le constructeur recommande 2,4 bar à froid. Question aux élèves : pourquoi ce sous-gonflage augmente-t-il le risque d’accident alors que le pneu contient encore de l’air ?',
+        oralPlan: ['0-10 min : accroche sécurité routière, lecture d’une étiquette de pression constructeur, formulation du problème.', '10-25 min : rappels guidés pression p = F/S, unités Pa/bar, manomètre, pression à froid.', '25-55 min : TP modèle avec seringue ou bouteille manométrée : mesurer p quand V varie, ou exploiter un jeu de données p,V,T.', '55-70 min : institutionnalisation du modèle pV = nRT, cas à n constant, conversions T(K) et bar/Pa.', '70-80 min : retour au pneu : sous-gonflage, déformation, échauffement, adhérence, usure, consommation.', '80-90 min : trace écrite et évaluation flash en trois questions.'],
+        trace: ['Un pneu contient de l’air que l’on peut modéliser par un gaz parfait : pV = nRT.', 'La pression dépend du volume, de la quantité d’air et de la température. La température doit être exprimée en kelvins.', 'Un pneu sous-gonflé contient moins d’air que prévu : il se déforme davantage sous la charge.', 'Cette déformation provoque un échauffement, une usure plus rapide, une moins bonne tenue de route et une surconsommation.', 'On vérifie donc la pression à froid avec un manomètre et on respecte la valeur constructeur.']
       }
     };
 
@@ -2275,13 +2519,16 @@
       rev_redressement: { formulas: ['Redressement : alternatif → redressé', 'Filtrage par condensateur : diminution de l’ondulation', 'Onduleur : continu → alternatif', 'Oscillogramme : tension en fonction du temps', 'Période T et fréquence f = 1/T'] },
       rev_moteur: { formulas: ['Moteur : énergie électrique → énergie mécanique', 'η = Putile / Preçue', 'P électrique = U × I en continu', 'Pertes : échauffement, frottements', 'η ≤ 1 ou η ≤ 100 %'] },
       rev_pile_redox: { formulas: ['Oxydation : perte d’électrons', 'Réduction : gain d’électrons', 'Pile : énergie chimique → énergie électrique', 'Oxydant : capte des électrons', 'Réducteur : cède des électrons'] },
-      rev_debit_venturi: { formulas: ['Qv = V / t', 'v = d / t', 'Débit, section, vitesse : si section diminue, vitesse augmente', 'Venturi : vitesse augmente, pression diminue', 'Pression : p = F / S'] }
+      rev_debit_venturi: { formulas: ['Qv = V / t', 'v = d / t', 'Débit, section, vitesse : si section diminue, vitesse augmente', 'Venturi : vitesse augmente, pression diminue', 'Pression : p = F / S'] },
+      rev_pneus_gaz: { formulas: ['Gaz parfait : pV = nRT', 'À n constant : pV/T = constante', 'Si V et n constants : p/T = constante', 'Pression : p = F / S', 'T(K) = θ(°C) + 273,15', '1 bar = 100 000 Pa'] }
     };
 
     const state = {
       selectedSession: sessions[0],
       selectedRevision: revisionCards[0],
       selectedTp: revisionCards[0],
+      selectedSimulation: revisionCards[0],
+      progress: JSON.parse(localStorage.getItem('caplp_progress_v1') || '{}'),
       scoreGood: Number(localStorage.getItem('caplp_revision_good') || 0),
       scoreTotal: Number(localStorage.getItem('caplp_revision_total') || 0),
       qcmIndex: 0,
@@ -2294,9 +2541,13 @@
       oralBtn: document.getElementById('oralModeBtn'),
       revBtn: document.getElementById('revisionModeBtn'),
       tpBtn: document.getElementById('tpModeBtn'),
+      simulationBtn: document.getElementById('simulationModeBtn'),
+      progressBtn: document.getElementById('progressModeBtn'),
       workPanel: document.getElementById('workPanel'),
       revisionPanel: document.getElementById('revisionPanel'),
       tpPanel: document.getElementById('tpPanel'),
+      simulationPanel: document.getElementById('simulationPanel'),
+      progressPanel: document.getElementById('progressPanel'),
       selectedTitle: document.getElementById('selectedTitle'),
       selectedHint: document.getElementById('selectedHint'),
       levelSelect: document.getElementById('levelSelect'),
@@ -2327,18 +2578,29 @@
       revisionLevel: document.getElementById('revisionLevel'),
       revisionDomain: document.getElementById('revisionDomain'),
       tpThemeSelect: document.getElementById('tpThemeSelect'),
-      tpContent: document.getElementById('tpContent')
+      tpContent: document.getElementById('tpContent'),
+      simulationThemeSelect: document.getElementById('simulationThemeSelect'),
+      simulationContent: document.getElementById('simulationContent'),
+      progressSummary: document.getElementById('progressSummary'),
+      progressDetails: document.getElementById('progressDetails')
     };
 
     function setMode(mode) {
       const isRevision = mode === 'revision';
       const isTp = mode === 'tp';
+      const isSimulation = mode === 'simulation';
+      const isProgress = mode === 'progress';
       el.revBtn.classList.toggle('active', isRevision);
       el.tpBtn.classList.toggle('active', isTp);
+      el.simulationBtn.classList.toggle('active', isSimulation);
+      el.progressBtn.classList.toggle('active', isProgress);
       el.oralBtn.classList.toggle('active', mode === 'oral');
       el.revisionPanel.style.display = isRevision ? 'block' : 'none';
       el.tpPanel.style.display = isTp ? 'block' : 'none';
+      el.simulationPanel.style.display = isSimulation ? 'block' : 'none';
+      el.progressPanel.style.display = isProgress ? 'block' : 'none';
       el.workPanel.style.display = mode === 'oral' ? 'block' : 'none';
+      if (isProgress) renderProgressDashboard();
     }
 
     function fillSelect(select, values) {
@@ -2483,13 +2745,136 @@
       });
     }
 
+    function getProgressItem(id) {
+      if (!state.progress[id]) {
+        state.progress[id] = { course: false, qcm: false, tp: false };
+      }
+      return state.progress[id];
+    }
+
+    function saveProgress() {
+      localStorage.setItem('caplp_progress_v1', JSON.stringify(state.progress));
+    }
+
+    function setProgress(id, key, value) {
+      const item = getProgressItem(id);
+      item[key] = value;
+      item.updatedAt = new Date().toISOString();
+      saveProgress();
+      renderRevisionList();
+      renderTpSelect();
+      if (state.selectedRevision?.id === id) renderProgressControls(id);
+      if (state.selectedTp?.id === id) renderTpProgressControls(id);
+      renderProgressDashboard();
+    }
+
+    function toggleProgress(id, key) {
+      const item = getProgressItem(id);
+      setProgress(id, key, !item[key]);
+    }
+
+    function progressIcon(id, key, label) {
+      return `<span class="progressBadge ${getProgressItem(id)[key] ? 'done' : ''}" title="${label}">${getProgressItem(id)[key] ? '✓' : label[0]}</span>`;
+    }
+
+    function renderProgressControls(id) {
+      const target = document.getElementById('courseProgressControls');
+      if (!target) return;
+      const item = getProgressItem(id);
+      target.innerHTML = `
+        <button class="checkBtn ${item.course ? 'done' : ''}" type="button" data-progress-key="course">${item.course ? '✓ Cours lu' : 'Cocher cours lu'}</button>
+        <button class="checkBtn ${item.qcm ? 'done' : ''}" type="button" data-progress-key="qcm">${item.qcm ? '✓ QCM fait' : 'Cocher QCM fait'}</button>
+        <button class="checkBtn ${item.tp ? 'done' : ''}" type="button" data-progress-key="tp">${item.tp ? '✓ TP révisé' : 'Cocher TP révisé'}</button>
+      `;
+      target.querySelectorAll('button').forEach(btn => {
+        btn.addEventListener('click', () => toggleProgress(id, btn.dataset.progressKey));
+      });
+    }
+
+    function renderTpProgressControls(id) {
+      const target = document.getElementById('tpProgressControls');
+      if (!target) return;
+      const item = getProgressItem(id);
+      target.innerHTML = `
+        <button class="checkBtn ${item.tp ? 'done' : ''}" type="button" data-progress-key="tp">${item.tp ? '✓ TP révisé' : 'Cocher TP révisé'}</button>
+        <button class="checkBtn ${item.course ? 'done' : ''}" type="button" data-progress-key="course">${item.course ? '✓ Cours lu' : 'Cocher cours lu'}</button>
+        <button class="checkBtn ${item.qcm ? 'done' : ''}" type="button" data-progress-key="qcm">${item.qcm ? '✓ QCM fait' : 'Cocher QCM fait'}</button>
+      `;
+      target.querySelectorAll('button').forEach(btn => {
+        btn.addEventListener('click', () => toggleProgress(id, btn.dataset.progressKey));
+      });
+    }
+
+    function progressStats() {
+      const cards = revisionCards;
+      const count = key => cards.filter(card => getProgressItem(card.id)[key]).length;
+      return {
+        total: cards.length,
+        course: count('course'),
+        qcm: count('qcm'),
+        tp: count('tp')
+      };
+    }
+
+    function meter(label, value, total) {
+      const percent = total ? Math.round((value / total) * 100) : 0;
+      return `
+        <div class="meterBox">
+          <strong>${value}/${total}</strong>
+          <span>${label} - ${percent}%</span>
+          <div class="meterBar"><div class="meterFill" style="width:${percent}%"></div></div>
+        </div>
+      `;
+    }
+
+    function renderProgressDashboard() {
+      if (!el.progressSummary || !el.progressDetails) return;
+      const stats = progressStats();
+      el.progressSummary.innerHTML = `
+        <h3>Vue d’ensemble</h3>
+        <div class="progressMeters">
+          ${meter('Cours lus', stats.course, stats.total)}
+          ${meter('QCM faits', stats.qcm, stats.total)}
+          ${meter('TP révisés', stats.tp, stats.total)}
+        </div>
+      `;
+      const rows = revisionCards.map(card => {
+        const item = getProgressItem(card.id);
+        const doneCount = ['course', 'qcm', 'tp'].filter(k => item[k]).length;
+        return `
+          <tr>
+            <td><b>${card.title}</b><br><span class="focusLine">${card.level} · ${card.domain}</span></td>
+            <td>${item.course ? '✓' : 'À faire'}</td>
+            <td>${item.qcm ? '✓' : 'À faire'}</td>
+            <td>${item.tp ? '✓' : 'À faire'}</td>
+            <td>${doneCount}/3</td>
+          </tr>
+        `;
+      }).join('');
+      el.progressDetails.innerHTML = `
+        <h3>Détail par notion</h3>
+        <table class="progressTable">
+          <thead><tr><th>Notion</th><th>Cours</th><th>QCM</th><th>TP</th><th>Total</th></tr></thead>
+          <tbody>${rows}</tbody>
+        </table>
+      `;
+    }
+
     function renderRevisionList() {
       const list = filteredRevisionCards();
       el.revisionCards.innerHTML = '';
       list.forEach(card => {
         const div = document.createElement('div');
         div.className = 'miniCard' + (card.id === state.selectedRevision.id ? ' active' : '');
-        div.innerHTML = `<strong>${card.title}</strong><span>${card.level} · ${card.domain}</span>`;
+        div.innerHTML = `
+          <strong>${card.title}</strong>
+          <span>${card.level} · ${card.domain}</span>
+          <span class="progressBadges">
+            ${progressIcon(card.id, 'course', 'Cours')}
+            ${progressIcon(card.id, 'qcm', 'QCM')}
+            ${progressIcon(card.id, 'tp', 'TP')}
+          </span>
+        `;
         div.addEventListener('click', () => loadRevision(card));
         el.revisionCards.appendChild(div);
       });
@@ -2555,7 +2940,9 @@
       getTpCards().forEach(card => {
         const option = document.createElement('option');
         option.value = card.id;
-        option.textContent = `${card.title} - ${card.level}`;
+        const item = getProgressItem(card.id);
+        const status = item.tp ? '✓ ' : '';
+        option.textContent = `${status}${card.title} - ${card.level}`;
         el.tpThemeSelect.appendChild(option);
       });
       el.tpThemeSelect.value = state.selectedTp.id;
@@ -2588,6 +2975,7 @@
           <span class="pill green">${card.level}</span>
           <span class="pill amber">${tp.duration}</span>
         </p>
+        <div id="tpProgressControls" class="progressActions"></div>
         <div class="visualBox">
           <h4>Illustration du montage</h4>
           ${visual.svg}
@@ -2621,6 +3009,7 @@
           </section>
         </div>
       `;
+      renderTpProgressControls(card.id);
     }
 
     function randomTp() {
@@ -2673,13 +3062,144 @@
           ${section('3. Formules à connaître', sheet.formulas, true, 'formulaList')}
           ${section('4. Unités et conversions', sheet.units)}
           ${section('5. Méthode type pour résoudre un exercice', sheet.method)}
+          ${sheet.contextualization ? `
+            <details open>
+              <summary>6. Contextualisation CAPLP</summary>
+              <div class="courseSheetContent"><div class="exampleBox">${sheet.contextualization}</div></div>
+            </details>
+          ` : ''}
+          ${sheet.oralPlan ? section('7. Déroulé possible pour une séance de 1 h 30', sheet.oralPlan, true) : ''}
+          ${sheet.trace ? section('8. Trace écrite synthèse', sheet.trace, true) : ''}
           <details open>
-            <summary>6. Exemple corrigé très court</summary>
+            <summary>${sheet.trace ? '9' : '6'}. Exemple corrigé très court</summary>
             <div class="courseSheetContent"><div class="exampleBox">${sheet.example}</div></div>
           </details>
-          ${section('7. Erreurs fréquentes à surveiller', sheet.traps)}
+          ${section(sheet.trace ? '10. Erreurs fréquentes à surveiller' : '7. Erreurs fréquentes à surveiller', sheet.traps)}
         </div>
       `;
+    }
+
+    function renderSimulationSelect() {
+      el.simulationThemeSelect.innerHTML = '';
+      revisionCards.forEach(card => {
+        const option = document.createElement('option');
+        option.value = card.id;
+        option.textContent = `${card.title} - ${card.level}`;
+        el.simulationThemeSelect.appendChild(option);
+      });
+      el.simulationThemeSelect.value = state.selectedSimulation.id;
+    }
+
+    function getSimulationData(card) {
+      const bo = boBank[card.id] || {
+        level: card.level,
+        module: `${card.domain} - repère programme voie professionnelle`,
+        points: ['Identifier les grandeurs et unités.', 'Réaliser ou exploiter une mesure.', 'Interpréter un résultat expérimental.', 'Relier la notion à un contexte professionnel.']
+      };
+      const sheet = getDetailedCourse(card, bo);
+      const tp = tpBank[card.id] || fallbackTp(card);
+      const visual = visualBank[card.id] || visualBank.rev_ph;
+      return {
+        title: card.title,
+        level: card.level,
+        domain: card.domain,
+        bo,
+        sheet,
+        tp,
+        visual,
+        context: sheet.contextualization || `Situation déclenchante : partir d’un problème concret lié à ${card.title.toLowerCase()}, puis demander aux élèves quelle grandeur mesurer et comment conclure.`,
+        jury: [
+          'Le jury doit entendre un objectif élève observable, formulé avec un verbe d’action.',
+          'La séance doit être faisable en 1 h 30 : une activité centrale, pas tout le chapitre.',
+          'La manipulation doit produire une donnée exploitable : tableau, courbe, schéma annoté ou comparaison.',
+          'Les risques, EPI, limites du modèle et données secours doivent être anticipés.',
+          'La trace écrite doit être courte, structurée et directement reliée à l’activité.'
+        ],
+        plan: sheet.oralPlan || [
+          '0-10 min : situation déclenchante, question problème, recueil d’hypothèses.',
+          '10-20 min : rappel ciblé des grandeurs, unités et sécurité.',
+          '20-50 min : TP ou activité expérimentale guidée par groupes.',
+          '50-65 min : mise en commun et exploitation des résultats.',
+          '65-80 min : institutionnalisation : principe, formule, unités, limites.',
+          '80-90 min : trace écrite synthèse et évaluation flash.'
+        ],
+        trace: sheet.trace || [
+          ...(sheet.definitions || []).slice(0, 1),
+          ...(sheet.principles || []).slice(0, 2),
+          ...(sheet.formulas || []).slice(0, 2),
+          'La conclusion doit relier la grandeur étudiée au contexte de départ.'
+        ]
+      };
+    }
+
+    function renderSimulation(cardOrId) {
+      const card = typeof cardOrId === 'string' ? revisionCards.find(item => item.id === cardOrId) : cardOrId;
+      if (!card) return;
+      state.selectedSimulation = card;
+      if (el.simulationThemeSelect.value !== card.id) el.simulationThemeSelect.value = card.id;
+      const sim = getSimulationData(card);
+      el.simulationContent.innerHTML = `
+        <h3>${sim.title}</h3>
+        <p>
+          <span class="pill">${sim.domain}</span>
+          <span class="pill green">${sim.level}</span>
+          <span class="pill amber">Simulation oral CAPLP - séance 1 h 30</span>
+        </p>
+        <div class="simSection">
+          <h3>Attendus du jury</h3>
+          <ul class="clean">${sim.jury.map(item => `<li>${item}</li>`).join('')}</ul>
+        </div>
+        <div class="boBox">
+          <b>Repères BO :</b> ${sim.bo.level}<br>
+          <b>Module :</b> ${sim.bo.module}
+          <ul>${sim.bo.points.map(point => `<li>${point}</li>`).join('')}</ul>
+        </div>
+        <div class="simSection">
+          <h3>Contextualisation</h3>
+          <p>${sim.context}</p>
+        </div>
+        <div class="visualBox">
+          <h4>Support visuel / montage</h4>
+          ${sim.visual.svg}
+          <p class="visualCaption">${sim.visual.caption}</p>
+        </div>
+        <div class="simSection">
+          <h3>Déroulé de séance 1 h 30</h3>
+          <ol class="simTimeline">${sim.plan.map(item => `<li>${item}</li>`).join('')}</ol>
+        </div>
+        <div class="simSection">
+          <h3>TP proposé</h3>
+          <p><b>${sim.tp.title}</b> <span class="pill amber">${sim.tp.duration}</span></p>
+          <h3>Matériel</h3>
+          <ul class="clean">${sim.tp.material.map(item => `<li>${item}</li>`).join('')}</ul>
+          <h3>Réalisation</h3>
+          <ul class="clean">${sim.tp.steps.map(item => `<li>${item}</li>`).join('')}</ul>
+          <h3>Observations attendues</h3>
+          <ul class="clean">${sim.tp.observations.map(item => `<li>${item}</li>`).join('')}</ul>
+          <h3>Exploitation</h3>
+          <p>${sim.tp.exploitation}</p>
+          <h3>Sécurité / vigilance</h3>
+          <p>${sim.tp.safety}</p>
+        </div>
+        <div class="simSection">
+          <h3>Trace écrite de fin de séance</h3>
+          <ul class="clean">${sim.trace.map(item => `<li>${item}</li>`).join('')}</ul>
+        </div>
+        <div class="simSection">
+          <h3>Évaluation flash</h3>
+          <ul class="clean">
+            <li>Nommer la grandeur mesurée et son unité.</li>
+            <li>Choisir la relation ou le principe utilisé.</li>
+            <li>Rédiger une conclusion en une phrase reliée au contexte.</li>
+          </ul>
+        </div>
+      `;
+    }
+
+    function randomSimulation() {
+      const card = revisionCards[Math.floor(Math.random() * revisionCards.length)];
+      renderSimulation(card);
+      setMode('simulation');
     }
 
     function showJuryAnswer() {
@@ -2732,6 +3252,7 @@
       el.courseBox.innerHTML = `
         <h3>${card.title}</h3>
         <div>${card.tags.map(t => `<span class="pill violet">${t}</span>`).join('')}</div>
+        <div id="courseProgressControls" class="progressActions"></div>
         <ul class="clean">${card.course.map(x => `<li>${x}</li>`).join('')}</ul>
         ${renderDetailedCourse(card, bo)}
         <div class="visualBox">
@@ -2746,6 +3267,7 @@
         </div>
         <div class="deepBox"><b>Aller plus loin :</b> ${deepening}</div>
       `;
+      renderProgressControls(card.id);
       renderQcm();
       updateScore();
       setMode('revision');
@@ -2827,6 +3349,7 @@
       state.scoreTotal += 1;
       const selected = state.shuffledOptions[idx];
       if (selected && selected.originalIndex === q.answer) state.scoreGood += 1;
+      setProgress(state.selectedRevision.id, 'qcm', true);
       localStorage.setItem('caplp_revision_good', state.scoreGood);
       localStorage.setItem('caplp_revision_total', state.scoreTotal);
       renderQcm(true);
@@ -2851,6 +3374,18 @@
       updateScore();
     }
 
+    function resetProgress() {
+      if (!confirm('Réinitialiser toute la progression cours / QCM / TP ?')) return;
+      state.progress = {};
+      saveProgress();
+      renderRevisionList();
+      renderTpSelect();
+      loadRevision(state.selectedRevision);
+      loadTp(state.selectedTp);
+      renderProgressDashboard();
+      setMode('progress');
+    }
+
     document.getElementById('proposalBtn').addEventListener('click', buildProposal);
     document.getElementById('oralCorrectionBtn').addEventListener('click', oralCorrection);
     document.getElementById('saveBtn').addEventListener('click', saveCurrent);
@@ -2863,12 +3398,19 @@
     document.getElementById('juryAnswerBtn').addEventListener('click', showJuryAnswer);
     document.getElementById('randomTpBtn').addEventListener('click', randomTp);
     document.getElementById('syncTpBtn').addEventListener('click', () => { loadTp(state.selectedRevision); setMode('tp'); });
+    document.getElementById('randomSimulationBtn').addEventListener('click', randomSimulation);
+    document.getElementById('syncSimulationBtn').addEventListener('click', () => { renderSimulation(state.selectedRevision); setMode('simulation'); });
+    document.getElementById('progressRefreshBtn').addEventListener('click', renderProgressDashboard);
+    document.getElementById('progressResetBtn').addEventListener('click', resetProgress);
     el.revisionLevel.addEventListener('change', () => { renderRevisionList(); const list = filteredRevisionCards(); if (list[0]) loadRevision(list[0]); });
     el.revisionDomain.addEventListener('change', () => { renderRevisionList(); const list = filteredRevisionCards(); if (list[0]) loadRevision(list[0]); });
     el.tpThemeSelect.addEventListener('change', () => loadTp(el.tpThemeSelect.value));
+    el.simulationThemeSelect.addEventListener('change', () => renderSimulation(el.simulationThemeSelect.value));
     el.oralBtn.addEventListener('click', () => setMode('oral'));
     el.revBtn.addEventListener('click', () => setMode('revision'));
     el.tpBtn.addEventListener('click', () => setMode('tp'));
+    el.simulationBtn.addEventListener('click', () => setMode('simulation'));
+    el.progressBtn.addEventListener('click', () => setMode('progress'));
 
     let scene, camera, renderer, group, raycaster, mouse, cards;
     function initThree() {
@@ -3012,8 +3554,11 @@
     loadSession(sessions[0]);
     renderRevisionList();
     renderTpSelect();
+    renderSimulationSelect();
     loadRevision(revisionCards[0]);
     loadTp(revisionCards[0]);
+    renderSimulation(revisionCards[0]);
+    renderProgressDashboard();
     setMode('oral');
     updateScore();
     initThree();
